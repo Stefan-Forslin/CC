@@ -30,21 +30,20 @@ const SignUpForm = () => {
 	 return;
 	}
 	try {
-		const {user } = await createAuthUserWithEmailAndPassword(
-			email, 
-			password
-			);
-		await createUserDocumentFromAuth(user,{displayName});
+		const { user } = await createAuthUserWithEmailAndPassword(
+		  email,
+		  password
+		);
+		await createUserDocumentFromAuth(user, { displayName });
 		resetFormFields();
-	} catch(error){
-		if(error.code === 'auth/email-already-in-use'){
-		   alert('fuck you, pick another email.')
+	  } catch (error) {
+		if (error.code === 'auth/email-already-in-use') {
+		  alert('Cannot create user, email already in use');
+		} else {
+		  console.log('user creation encountered an error', error);
 		}
-		else {
-			console.log('user fucked up', error);
-		}	
-	}
-   };
+	  }
+	};
 	const handleChange = (event) => {
 	 const {name, value} = event.target;
 	 setFormFields({...formFields, [name]: value});
