@@ -3,7 +3,8 @@ import {
 	     getAuth, 
 	     signInWithRedirect, 
 		 signInWithPopup,
-		 GoogleAuthProvider 
+		 GoogleAuthProvider,
+		 createUserWithEmailAndPassword 
 	   } from 'firebase/auth';
 import {
 	getFirestore,
@@ -20,14 +21,20 @@ const firebaseConfig = {
 	appId: "1:452019945584:web:2346ef8f2c2d79975b74b5"
   };
   const firebaseApp = initializeApp(firebaseConfig);
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({
+  const googleProvider = new GoogleAuthProvider();
+  googleProvider.setCustomParameters({
 	prompt: "select_account"
   });
   export const auth = getAuth();
-  export const signInWithGooglePopUp = () => signInWithPopup(auth, provider);
-  export const db = getFirestore();
-  export const createUserDocumentFromAuth = async (userAuth) => {
+  export const signInWithGooglePopUp = () => 
+   signInWithPopup(auth, provider);
+  export const signInWithGoogleRedirect = () => 
+   signInWithRedirect(auth, googleProvider);
+   export const db = getFirestore();
+  export const createUserDocumentFromAuth = async (
+	userAuth, 
+	additionalInformation = {}) => {
+	if(!userAuth) return;
 	const userDocRef = doc(db, 'users', userAuth.uid);
 	const userSnapshot = await getDoc(userDocRef);
 	if (!userSnapshot.exists()) {
@@ -37,7 +44,8 @@ const firebaseConfig = {
 		   await setDoc(userDocRef, {
 			displayName,
 			email,
-			createdAt
+			createdAt,
+			...additionalInformation
 		   });
 		} catch (error) {
 		  console.log('error creating the user', error.message);
@@ -45,3 +53,7 @@ const firebaseConfig = {
 	  }
 	  return userDocRef;
   };
+  export const createAuthUserWithEmailAndPassword = async (email, password) => {
+	if(!email || !password) return;
+	return await createUserWithEmailAndPassword(auth,email,password)
+  }
