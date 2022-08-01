@@ -1,5 +1,4 @@
 import { CartItemContainer, ItemDetails } from './cart-item.styles';
-
 const CartItem = ({ cartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
   return (
@@ -14,5 +13,4 @@ const CartItem = ({ cartItem }) => {
     </CartItemContainer>
   );
 };
-
 export default CartItem;

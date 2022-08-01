@@ -5,16 +5,13 @@ import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils';
-
 import { SignUpContainer } from './sign-up-form.styles';
-
 const defaultFormFields = {
   displayName: '',
   email: '',
   password: '',
   confirmPassword: '',
 };
-
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
@@ -23,18 +20,15 @@ const SignUpForm = () => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (password !== confirmPassword) {
       alert('passwords do not match');
       return;
     }
-
     try {
       const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
-
       await createUserDocumentFromAuth(user, { displayName });
       resetFormFields();
     } catch (error) {
@@ -45,13 +39,10 @@ const SignUpForm = () => {
       }
     }
   };
-
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormFields({ ...formFields, [name]: value });
   };
-
   return (
     <SignUpContainer>
       <h2>Don't have an account?</h2>
@@ -65,7 +56,6 @@ const SignUpForm = () => {
           name='displayName'
           value={displayName}
         />
-
         <FormInput
           label='Email'
           type='email'
@@ -74,7 +64,6 @@ const SignUpForm = () => {
           name='email'
           value={email}
         />
-
         <FormInput
           label='Password'
           type='password'
@@ -83,7 +72,6 @@ const SignUpForm = () => {
           name='password'
           value={password}
         />
-
         <FormInput
           label='Confirm Password'
           type='password'
@@ -97,5 +85,4 @@ const SignUpForm = () => {
     </SignUpContainer>
   );
 };
-
 export default SignUpForm;

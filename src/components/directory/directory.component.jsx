@@ -7,7 +7,6 @@ const Directory = () => {
 		  title: "hats",
 		  imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
 		  route: "shop/hats"
-		  
 		},
 		{
 		  id: 2,
