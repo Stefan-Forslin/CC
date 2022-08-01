@@ -10,12 +10,15 @@ import {
   EmptyMessage,
   CartItems,
 } from './cart-dropdown.styles';
+
 const CartDropdown = () => {
   const { cartItems } = useContext(CartContext);
   const navigate = useNavigate();
+
   const goToCheckoutHandler = () => {
     navigate('/checkout');
   };
+
   return (
     <CartDropdownContainer>
       <CartItems>
@@ -25,8 +28,9 @@ const CartDropdown = () => {
           <EmptyMessage>Your cart is empty</EmptyMessage>
         )}
       </CartItems>
-      <Button onClick={goToCheckoutHandler}>TO CHECKOUT</Button>
+      <Button onClick={goToCheckoutHandler}>GO TO CHECKOUT</Button>
     </CartDropdownContainer>
   );
 };
+
 export default CartDropdown;
