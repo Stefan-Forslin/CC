@@ -12,6 +12,7 @@ export const BaseButton = styled.button`
   text-transform: uppercase;
   font-family: 'Roboto Slab';
   font-weight: bolder;
+  font-size: 0.69em;
   border: none;
   cursor: pointer;
   display: flex;
@@ -25,6 +26,7 @@ export const BaseButton = styled.button`
 export const GoogleSignInButton = styled(BaseButton)`
   background-color: #4285f4;
   color: white;
+  font-size: 0.69em;
   &:hover {
     background-color: #357ae8;
     border: none;

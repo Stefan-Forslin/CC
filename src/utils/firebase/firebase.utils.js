@@ -87,7 +87,6 @@ export const getCategoriesAndDocuments = async () => {
   };
   export const createAuthUserWithEmailAndPassword = async (email, password) => {
 	if (!email || !password) return;
-  
 	return await createUserWithEmailAndPassword(auth, email, password);
   };
   export const signInAuthUserWithEmailAndPassword = async (email, password) => {
@@ -95,5 +94,5 @@ export const getCategoriesAndDocuments = async () => {
 	return await signInWithEmailAndPassword(auth, email, password);
   };
   export const signOutUser = async () => await signOut(auth);
-  export const onAuthStateChangedListener = (callback) => 
-  onAuthStateChanged(auth, callback, {/*errorCallback, completedCallback*/});
+  export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
