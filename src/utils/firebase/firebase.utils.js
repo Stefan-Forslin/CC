@@ -9,15 +9,16 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { getFirestore, 
-	     doc, 
-		 getDoc, 
-		 setDoc,
-		 collection,
-		 writeBatch,
-		 query,
-		 getDocs
-		  } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs,
+} from 'firebase/firestore';
 const firebaseConfig = {
 	apiKey: "AIzaSyC_fY8H30rlT9LyAfndYuMcBtoKdX8QAOQ",
 	authDomain: "crown-db-721dc.firebaseapp.com",
@@ -25,8 +26,7 @@ const firebaseConfig = {
 	storageBucket: "crown-db-721dc.appspot.com",
 	messagingSenderId: "452019945584",
 	appId: "1:452019945584:web:2346ef8f2c2d79975b74b5"
-  };
-  const firebaseApp = initializeApp(firebaseConfig);
+  };const firebaseApp = initializeApp(firebaseConfig);
   const googleProvider = new GoogleAuthProvider();
   googleProvider.setCustomParameters({
 	prompt: 'select_account',
@@ -38,30 +38,25 @@ const firebaseConfig = {
 	signInWithRedirect(auth, googleProvider);
   export const db = getFirestore();
   export const addCollectionAndDocuments = async (
-	collectionKey, 
+	collectionKey,
 	objectsToAdd,
 	field
-	) => {
+  ) => {
 	const collectionRef = collection(db, collectionKey);
-    const batch = writeBatch(db);
+	const batch = writeBatch(db);
 	objectsToAdd.forEach((object) => {
 	  const docRef = doc(collectionRef, object.title.toLowerCase());
 	  batch.set(docRef, object);
- });
- await batch.commit();
- console.log('done');
-}; 
-export const getCategoriesAndDocuments = async () => {
+	});
+	await batch.commit();
+	console.log('done');
+  };
+  export const getCategoriesAndDocuments = async () => {
 	const collectionRef = collection(db, 'categories');
 	const q = query(collectionRef);
 	const querySnapshot = await getDocs(q);
-	const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-		const {title, items} = docSnapshot.data();
-		acc[title.toLowerCase()] = items;
-		return acc;
-	}, {});
-	return categoryMap;
-}
+	return querySnapshot.docs.map((doc) => doc.data());
+  };
   export const createUserDocumentFromAuth = async (
 	userAuth,
 	additionalInformation = {}
@@ -95,4 +90,4 @@ export const getCategoriesAndDocuments = async () => {
   };
   export const signOutUser = async () => await signOut(auth);
   export const onAuthStateChangedListener = (callback) =>
-  onAuthStateChanged(auth, callback);
+	onAuthStateChanged(auth, callback);
